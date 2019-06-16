@@ -1,0 +1,42 @@
+#Configuration of flume
+
+$ tar -zxf apache-flume-1.8.0-bin.tar.gz
+$ sudo mv apache-flume-1.8.0 /usr/local/flume
+$ vim ~/.bashrc
+  export FLUME_HOME=/usr/local/flume
+  export PATH=$PATH:$FLUME_HOME/bin
+$ source .bashrc
+$ flume-ng --version
+
+#directory in Hdfs to store the twitter data and grant the required permissions.
+$ hdfs dfs -mkdir /user/flume/tweets
+$ hdfs dfs -chmod a+rwx /user/flume/tweets
+
+#File say my.conf into the flume/conf directory to enter the details for the source, channel and sink for the configuration of flume.
+
+$ cd /usr/local/flume/conf
+$ vim twitter.conf
+    FileAgent.sources = tail
+    FileAgent.channels = Channel-2
+    FileAgent.sinks = HDFS
+    FileAgent.sources.tail.type = exec
+    FileAgent.sources.tail.command = tail -F /var/log/secure
+    FileAgent.sources.tail.channels = Channel-2
+    FileAgent.sinks.HDFS.type = hdfs
+    FileAgent.sinks.HDFS.hdfs.path = hdfs://localhost:54310/user/flume/tweets
+    FileAgent.sinks.HDFS.hdfs.fileType = DataStream
+    FileAgent.sinks.HDFS.channel = Channel-2
+    FileAgent.channels.Channel-2.type = memory
+    
+#directory in Hdfs to store the twitter data and grant the required permissions.
+$ hdfs dfs -mkdir /user/flume/tweets
+$ hdfs dfs -chmod a+rwx /user/flume/tweets
+
+$ cd /Twitter_jars
+$ cp ./* /usr/local/flume/lib
+$ cp twitter.conf /usr/local/flume/conf
+$ cd /usr/local/flume/conf
+$ vim twitter.conf
+
+#start flume to copy data into hdfs
+$flume-ng agent -n TwitterAgent -f /usr/local/flume/conf/twitter.conf
