@@ -32,6 +32,7 @@ $ vim twitter.conf
 $ hdfs dfs -mkdir /user/flume/tweets
 $ hdfs dfs -chmod a+rwx /user/flume/tweets
 
+#Download twitter jar and copy to lib directory in flume
 $ cd /Twitter_jars
 $ cp ./* /usr/local/flume/lib
 $ cp twitter.conf /usr/local/flume/conf
