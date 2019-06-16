@@ -1,0 +1,27 @@
+TwitterAgent.sources = Twitter
+TwitterAgent.channels = MemChannel
+TwitterAgent.sinks = HDFS
+# Describing/Configuring the source
+TwitterAgent.sources.Twitter.type = org.apache.flume.source.twitter.TwitterSource
+TwitterAgent.sources.Twitter.consumerKey=7yBUbwi0fpR1YYOu9XmA4Ni2l
+TwitterAgent.sources.Twitter.consumerSecret=huPlVx9QzOreW1Hy6WWEerFIDYl1XqttyqkzRutt3TO9zjve6A
+TwitterAgent.sources.Twitter.accessToken=3177614287-3yYnh8HEpjpUm3uDJKWtO8kST1Yxv2AoTW7G2mN
+TwitterAgent.sources.Twitter.accessTokenSecret=7T4cE1yGoOF0RTYjupoUXID7nfReJXMJFlo8SsAW0tvRq
+TwitterAgent.sources.Twitter.keywords=hadoop, bigdata, mapreduce, mahout, hbase,
+nosql
+# Describing/Configuring the sink
+TwitterAgent.sources.Twitter.keywords= hadoop,election,sports, cricket,Big data
+TwitterAgent.sinks.HDFS.channel=MemChannel
+TwitterAgent.sinks.HDFS.type=hdfs
+TwitterAgent.sinks.HDFS.hdfs.path=hdfs://localhost:54310/user/flume/tweets
+TwitterAgent.sinks.HDFS.hdfs.fileType=DataStream
+TwitterAgent.sinks.HDFS.hdfs.writeformat=Text
+TwitterAgent.sinks.HDFS.hdfs.batchSize=1000
+TwitterAgent.sinks.HDFS.hdfs.rollSize=0
+TwitterAgent.sinks.HDFS.hdfs.rollCount=10000
+TwitterAgent.sinks.HDFS.hdfs.rollInterval=600
+TwitterAgent.channels.MemChannel.type=memory
+TwitterAgent.channels.MemChannel.capacity=10000
+TwitterAgent.channels.MemChannel.transactionCapacity=1000
+TwitterAgent.sources.Twitter.channels = MemChannel
+TwitterAgent.sinks.HDFS.channel = MemChannel
